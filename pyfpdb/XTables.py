@@ -137,6 +137,12 @@ class Table(Table_Window):
         if self.number not in WNCK_XTABLES:
             return None
         (_x, _y, _w, _h) = self.wnck_table_w.get_client_window_geometry()
+
+        # ensure correct ratio to indulge tiling window managers
+        ratio = (960, 662) # here it is, at least for stars' "old black". you should use it.
+        # shrink whichever side needs it
+        _w = min(_w, _h*ratio[0]/ratio[1])
+        _h = min(_h, _w*ratio[1]/ratio[0])
         return {'x'        : int(_x),
                 'y'        : int(_y),
                 'width'    : int(_w),
