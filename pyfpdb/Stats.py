@@ -1205,11 +1205,9 @@ def game_abbr(stat_dict, player, hand_instance):
 
 def turn_d1_riv_pat(stat_dict, player):
     stat_descriptions["turn_d1_riv_pat"] = _('% pat on third draw when discarded 1 on second draw') + 'turn_d1_riv_pat'
-    for s in stat_dict[player]:
-        if 'turn' in s: print s
     draw = stat_dict[player]['turn_d1']
     pat = stat_dict[player]['turn_d1_riv_pat']
-
+    stat = 0.0
     try:
         stat = float(pat)/float(draw)
         return (stat,
