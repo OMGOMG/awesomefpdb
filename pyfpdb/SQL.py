@@ -811,6 +811,9 @@ class Sql:
                         street3Raises TINYINT,
                         street4Raises TINYINT,
 
+                        street2OneToPatChance BOOLEAN,
+                        street2OneToPatDone BOOLEAN,
+
                         actionString VARCHAR(15))
                         ENGINE=INNODB"""
         elif db_server == 'postgresql':
@@ -955,6 +958,9 @@ class Sql:
                         street3Raises SMALLINT,
                         street4Raises SMALLINT,
 
+                        street2OneToPatChance BOOLEAN,
+                        street2OneToPatDone BOOLEAN,
+
                         actionString VARCHAR(15))"""
         elif db_server == 'sqlite':
             self.query['createHandsPlayersTable'] = """CREATE TABLE HandsPlayers (
@@ -1097,6 +1103,9 @@ class Sql:
                         street2Raises INT,
                         street3Raises INT,
                         street4Raises INT,
+
+                        street2OneToPatChance INT,
+                        street2OneToPatDone INT,
                         actionString VARCHAR(15))
                         """
 
@@ -1424,7 +1433,10 @@ class Sql:
                         street1Raises INT,
                         street2Raises INT,
                         street3Raises INT,
-                        street4Raises INT)
+                        street4Raises INT,
+
+                        street2OneToPatChance INT,
+                        street2OneToPatDone INT)
 
                         ENGINE=INNODB"""
         elif db_server == 'postgresql':
@@ -1537,7 +1549,10 @@ class Sql:
                         street1Raises INT,
                         street2Raises INT,
                         street3Raises INT,
-                        street4Raises INT)
+                        street4Raises INT,
+
+                        street2OneToPatChance INT,
+                        street2OneToPatDone INT)
                         """
         elif db_server == 'sqlite':
             self.query['createHudCacheTable'] = """CREATE TABLE HudCache (
@@ -1649,7 +1664,10 @@ class Sql:
                         street1Raises INT,
                         street2Raises INT,
                         street3Raises INT,
-                        street4Raises INT)
+                        street4Raises INT,
+
+                        street2OneToPatChance INT,
+                        street2OneToPatDone INT)
                         """
                         
         ################################
@@ -1767,7 +1785,10 @@ class Sql:
                         street1Raises INT,
                         street2Raises INT,
                         street3Raises INT,
-                        street4Raises INT)
+                        street4Raises INT,
+
+                        street2OneToPatChance INT,
+                        street2OneToPatDone INT)
 
                         ENGINE=INNODB"""
         elif db_server == 'postgresql':
@@ -1879,7 +1900,10 @@ class Sql:
                         street1Raises INT,
                         street2Raises INT,
                         street3Raises INT,
-                        street4Raises INT)
+                        street4Raises INT,
+
+                        street2OneToPatChance INT,
+                        street2OneToPatDone INT)
                         """
         elif db_server == 'sqlite':
             self.query['createCardsCacheTable'] = """CREATE TABLE CardsCache (
@@ -1990,7 +2014,10 @@ class Sql:
                         street1Raises INT,
                         street2Raises INT,
                         street3Raises INT,
-                        street4Raises INT)
+                        street4Raises INT,
+
+                        street2OneToPatChance INT,
+                        street2OneToPatDone INT)
                         """
                         
         ################################
@@ -2111,7 +2138,10 @@ class Sql:
                         street1Raises INT,
                         street2Raises INT,
                         street3Raises INT,
-                        street4Raises INT)
+                        street4Raises INT,
+
+                        street2OneToPatChance INT,
+                        street2OneToPatDone INT)
 
                         ENGINE=INNODB"""
         elif db_server == 'postgresql':
@@ -2226,7 +2256,10 @@ class Sql:
                         street1Raises INT,
                         street2Raises INT,
                         street3Raises INT,
-                        street4Raises INT)
+                        street4Raises INT,
+
+                        street2OneToPatChance INT,
+                        street2OneToPatDone INT)
                         """
         elif db_server == 'sqlite':
             self.query['createPositionsCacheTable'] = """CREATE TABLE PositionsCache (
@@ -2340,7 +2373,10 @@ class Sql:
                         street1Raises INT,
                         street2Raises INT,
                         street3Raises INT,
-                        street4Raises INT)
+                        street4Raises INT,
+
+                        street2OneToPatChance INT,
+                        street2OneToPatDone INT)
                         """
 
                         
@@ -2611,7 +2647,9 @@ class Sql:
                     sum(hc.street1Raises)               AS raise_1,
                     sum(hc.street2Raises)               AS raise_2,
                     sum(hc.street3Raises)               AS raise_3,
-                    sum(hc.street4Raises)               AS raise_4
+                    sum(hc.street4Raises)               AS raise_4,
+                    sum(hc.street2OneToPatChance)       AS turn_d1,
+                    sum(hc.street2OneToPatDone)         AS turn_d1_riv_pat
                 FROM Hands h
                      INNER JOIN HandsPlayers hp ON (hp.handId = h.id)
                      INNER JOIN HudCache hc ON (    hc.PlayerId = hp.PlayerId+0
@@ -2737,7 +2775,9 @@ class Sql:
                        sum(hc.street1Raises)               AS raise_1,
                        sum(hc.street2Raises)               AS raise_2,
                        sum(hc.street3Raises)               AS raise_3,
-                       sum(hc.street4Raises)               AS raise_4
+                       sum(hc.street4Raises)               AS raise_4,
+                       sum(hc.street2OneToPatChance)       AS turn_d1,
+                       sum(hc.street2OneToPatDone)         AS turn_d1_riv_pat
                 FROM Hands h
                      INNER JOIN HandsPlayers hp ON (hp.handId = h.id)
                      INNER JOIN HudCache hc     ON (hc.playerId = hp.playerId)
@@ -2890,7 +2930,9 @@ class Sql:
                            cast(hp2.street1Raises as <signed>integer)               AS raise_1,
                            cast(hp2.street2Raises as <signed>integer)               AS raise_2,
                            cast(hp2.street3Raises as <signed>integer)               AS raise_3,
-                           cast(hp2.street4Raises as <signed>integer)               AS raise_4
+                           cast(hp2.street4Raises as <signed>integer)               AS raise_4,
+                           cast(hp2.street2OneToPatChance as <signed>integer)       AS turn_d1,
+                           cast(hp2.street2OneToPatDone as <signed>integer)         AS turn_d1_riv_pat
                     FROM
                          Hands h
                          INNER JOIN Hands h2         ON (h2.id >= %s AND   h2.tableName = h.tableName)
@@ -3019,7 +3061,9 @@ class Sql:
                            cast(hp2.street1Raises as <signed>integer)               AS raise_1,
                            cast(hp2.street2Raises as <signed>integer)               AS raise_2,
                            cast(hp2.street3Raises as <signed>integer)               AS raise_3,
-                           cast(hp2.street4Raises as <signed>integer)               AS raise_4
+                           cast(hp2.street4Raises as <signed>integer)               AS raise_4,
+                           cast(hp2.street2OneToPatChance as <signed>integer)       AS turn_d1,
+                           cast(hp2.street2OneToPatDone as <signed>integer)         AS turn_d1_riv_pat
                          FROM Hands h                                                  /* this hand */
                          INNER JOIN Hands h2         ON (    h2.id >= %s           /* other hands */
                                                          AND h2.tableName = h.tableName)
@@ -3149,7 +3193,9 @@ class Sql:
                            cast(hp2.street1Raises as <signed>integer)               AS raise_1,
                            cast(hp2.street2Raises as <signed>integer)               AS raise_2,
                            cast(hp2.street3Raises as <signed>integer)               AS raise_3,
-                           cast(hp2.street4Raises as <signed>integer)               AS raise_4
+                           cast(hp2.street4Raises as <signed>integer)               AS raise_4,
+                           cast(hp2.street2OneToPatChance as <signed>integer)       AS turn_d1,
+                           cast(hp2.street2OneToPatDone as <signed>integer)         AS turn_d1_riv_pat
                          FROM Hands h                                                  /* this hand */
                          INNER JOIN Hands h2         ON (    h2.id >= %s           /* other hands */
                                                          AND h2.tableName = h.tableName)
@@ -5048,6 +5094,8 @@ class Sql:
                 ,street2Raises
                 ,street3Raises
                 ,street4Raises
+                ,street2OneToPatChance
+                ,street2OneToPatDone
                 )
                 SELECT h.gametypeId
                       ,hp.playerId
@@ -5146,6 +5194,8 @@ class Sql:
                       ,sum(hp.street2Raises)
                       ,sum(hp.street3Raises)
                       ,sum(hp.street4Raises)
+                      ,sum(hp.street2OneToPatChance)
+                      ,sum(hp.street2OneToPatDone)
                 FROM HandsPlayers hp
                 INNER JOIN Hands h ON (h.id = hp.handId)
                 <tourney_join_clause>
@@ -5257,6 +5307,8 @@ class Sql:
                 ,street2Raises
                 ,street3Raises
                 ,street4Raises
+                ,street2OneToPatChance
+                ,street2OneToPatDone
                 )
                 SELECT h.gametypeId
                       ,hp.playerId
@@ -5355,6 +5407,8 @@ class Sql:
                       ,sum(CAST(hp.street2Raises as integer))
                       ,sum(CAST(hp.street3Raises as integer))
                       ,sum(CAST(hp.street4Raises as integer))
+                      ,sum(CAST(hp.street2OneToPatChance as integer))
+                      ,sum(CAST(hp.street2OneToPatDone as integer))
                 FROM HandsPlayers hp
                 INNER JOIN Hands h ON (h.id = hp.handId)
                 <tourney_join_clause>
@@ -5466,6 +5520,8 @@ class Sql:
                 ,street2Raises
                 ,street3Raises
                 ,street4Raises
+                ,street2OneToPatChance
+                ,street2OneToPatDone
                 )
                 SELECT h.gametypeId
                       ,hp.playerId
@@ -5564,6 +5620,8 @@ class Sql:
                       ,sum(CAST(hp.street2Raises as integer))
                       ,sum(CAST(hp.street3Raises as integer))
                       ,sum(CAST(hp.street4Raises as integer))
+                      ,sum(CAST(hp.street2OneToPatChance as integer))
+                      ,sum(CAST(hp.street2OneToPatDone as integer))
                 FROM HandsPlayers hp
                 INNER JOIN Hands h ON (h.id = hp.handId)
                 <tourney_join_clause>
@@ -5674,7 +5732,9 @@ class Sql:
                 street1Raises,
                 street2Raises,
                 street3Raises,
-                street4Raises)
+                street4Raises,
+                street2OneToPatChance,
+                street2OneToPatDone)
             values (%s, %s, %s, %s, %s,
                     %s, %s, %s, %s, %s,
                     %s, %s, %s, %s, %s,
@@ -5694,7 +5754,7 @@ class Sql:
                     %s, %s, %s, %s, %s,
                     %s, %s, %s, %s, %s,
                     %s, %s, %s, %s, %s,
-                    %s, %s)"""
+                    %s, %s, %s, %s)"""
 
         self.query['update_hudcache'] = """
             UPDATE HudCache SET
@@ -5788,7 +5848,9 @@ class Sql:
             street1Raises=street1Raises+%s,
             street2Raises=street2Raises+%s,
             street3Raises=street3Raises+%s,
-            street4Raises=street4Raises+%s
+            street4Raises=street4Raises+%s,
+            street2OneToPatChance=street2OneToPatChance+%s,
+            street2OneToPatDone=street2OneToPatDone+%s
         WHERE gametypeId+0=%s
             AND   playerId=%s
             AND   activeSeats=%s
@@ -5903,7 +5965,9 @@ class Sql:
                 street1Raises,
                 street2Raises,
                 street3Raises,
-                street4Raises)
+                street4Raises,
+                street2OneToPatChance,
+                street2OneToPatDone)
             values (%s, %s, %s, %s, %s,
                     %s, %s, %s, %s, %s,
                     %s, %s, %s, %s, %s,
@@ -5923,7 +5987,7 @@ class Sql:
                     %s, %s, %s, %s, %s,
                     %s, %s, %s, %s, %s,
                     %s, %s, %s, %s, %s,
-                    %s
+                    %s, %s, %s
                     )"""
 
         self.query['update_cardscache'] = """
@@ -6018,7 +6082,9 @@ class Sql:
             street1Raises=street1Raises+%s,
             street2Raises=street2Raises+%s,
             street3Raises=street3Raises+%s,
-            street4Raises=street4Raises+%s
+            street4Raises=street4Raises+%s,
+            street2OneToPatChance=street2OneToPatChance+%s,
+            street2OneToPatDone=street2OneToPatDone+%s
         WHERE type=%s
             AND   category=%s
             AND   currency=%s
@@ -6129,7 +6195,9 @@ class Sql:
                 street1Raises,
                 street2Raises,
                 street3Raises,
-                street4Raises)
+                street4Raises,
+                street2OneToPatChance,
+                street2OneToPatDone)
             values (%s, %s, %s, %s, %s,
                     %s, %s, %s, %s, %s,
                     %s, %s, %s, %s, %s,
@@ -6149,7 +6217,8 @@ class Sql:
                     %s, %s, %s, %s, %s,
                     %s, %s, %s, %s, %s,
                     %s, %s, %s, %s, %s,
-                    %s, %s, %s, %s
+                    %s, %s, %s, %s, %s,
+                    %s
                     )"""
 
         self.query['update_positionscache'] = """
@@ -6244,7 +6313,9 @@ class Sql:
             street1Raises=street1Raises+%s,
             street2Raises=street2Raises+%s,
             street3Raises=street3Raises+%s,
-            street4Raises=street4Raises+%s
+            street4Raises=street4Raises+%s,
+            street2OneToPatChance=street2OneToPatChance+%s,
+            street2OneToPatDone=street2OneToPatDone+%s
         WHERE type=%s
             AND   base=%s
             AND   category=%s
@@ -6883,7 +6954,9 @@ class Sql:
                 street1Raises,
                 street2Raises,
                 street3Raises,
-                street4Raises
+                street4Raises,
+                street2OneToPatChance,
+                street2OneToPatDone
                )
                values (
                     %s, %s, %s, %s, %s,
@@ -6910,7 +6983,7 @@ class Sql:
                     %s, %s, %s, %s, %s,
                     %s, %s, %s, %s, %s,
                     %s, %s, %s, %s, %s,
-                    %s
+                    %s, %s, %s
                 )"""
 
         self.query['store_hands_actions'] = """insert into HandsActions (

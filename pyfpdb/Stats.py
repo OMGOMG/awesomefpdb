@@ -1203,6 +1203,29 @@ def game_abbr(stat_dict, player, hand_instance):
             '(%s)' % stat,
             _('Game abbreviation'))
 
+def turn_d1_riv_pat(stat_dict, player):
+    stat_descriptions["turn_d1_riv_pat"] = _('% pat on third draw when discarded 1 on second draw') + 'turn_d1_riv_pat'
+    for s in stat_dict[player]:
+        if 'turn' in s: print s
+    draw = stat_dict[player]['turn_d1']
+    pat = stat_dict[player]['turn_d1_riv_pat']
+
+    try:
+        stat = float(pat)/float(draw)
+        return (stat,
+                '%3.1f' % (100.0*stat),
+                '1>p_2.=%3.1f%%' % (100.0*stat),
+                'turn_d1_riv_pat=%3.1f%%' % (100.0*stat),
+                '(%d/%d)' % (pat, draw),
+                _('% pat on third draw when discarded 1 on second draw'))
+    except:
+        return (stat,
+                'NA',
+                '1>p_2.=NA',
+                'turn_d1_riv_pat=NA',
+                '(0/0)',
+                _('% pat on third draw when discarded 1 on second draw'))
+
 def blank(stat_dict, player):
     # blank space on the grid
     stat_descriptions["blank"] = "Blank"

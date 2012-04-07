@@ -2112,7 +2112,9 @@ class Database:
                                   pdata[p]['street1Raises'],
                                   pdata[p]['street2Raises'],
                                   pdata[p]['street3Raises'],
-                                  pdata[p]['street4Raises']
+                                  pdata[p]['street4Raises'],
+                                  pdata[p]['street2OneToPatDone'],
+                                  pdata[p]['street2OneToPatChance']
                             ) )
 
         if doinsert:
@@ -2249,11 +2251,13 @@ class Database:
         line.append(pdata[p]['street2Bets'])                 
         line.append(pdata[p]['street3Bets'])                 
         line.append(pdata[p]['street4Bets'])                 
-        line.append(pdata[p]['street0Raises'])               
-        line.append(pdata[p]['street1Raises'])               
+        line.append(pdata[p]['street0Raises'])
+        line.append(pdata[p]['street1Raises'])
         line.append(pdata[p]['street2Raises'])               
         line.append(pdata[p]['street3Raises'])               
         line.append(pdata[p]['street4Raises'])               
+        line.append(pdata[p]['street2OneToPatChance'])               
+        line.append(pdata[p]['street2OneToPatDone'])               
         
         for i in range(len(line)):
             if line[i]==True:  line[i] = 1

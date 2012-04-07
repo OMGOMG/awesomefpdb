@@ -86,7 +86,6 @@ class DerivedStats():
         init['street3Seen']         = False
         init['street4Seen']         = False
 
-
         for i in range(5):
             init['street%dCalls' % i] = 0
             init['street%dBets' % i] = 0
@@ -99,6 +98,10 @@ class DerivedStats():
             init['street%dCheckCallRaiseDone' %i]   = False
             init['otherRaisedStreet%d' %i]          = False
             init['foldToOtherRaisedStreet%d' %i]    = False
+
+        # might want to loop this once working
+        init['street2OneToPatChance'] = False
+        init['street2OneToPatDone'] = False
 
         #FIXME - Everything below this point is incomplete.
         init['other3BStreet0']              = False
@@ -268,6 +271,10 @@ class DerivedStats():
         # Additional stats
         # 3betSB, 3betBB
         # Squeeze, Ratchet?
+
+        # only relevant for multi street draw games (make sure to update when badeucey/badaci are added)
+        if hand.gametype['category'] in ['badugi', '27_3draw']:
+            self.calcDiscards(hand)
 
     def assembleHandsActions(self, hand):
         k = 0
@@ -873,6 +880,24 @@ class DerivedStats():
                 if action == 'calls':
                     self.handsplayers[player]['street0CalledRaiseDone'] += 1
                     fast_forward = True
+
+    def calcDiscards(self, hand):
+        """
+        street2OneToPatChance = discarded 1 on second draw
+        street2OneToPatDone = the above + patted the third draw
+        """
+        turnaction = hand.actions[hand.actionStreets[3]]
+        riveraction = hand.actions[hand.actionStreets[4]]
+        for tact in turnaction:
+            if tact[1] == 'discards' and tact[2] == 1:
+                print '    ', 'POTENTIAL:  %s %s %s' % tact[:3]
+                player = tact[0]
+                self.handsplayers[player]['street2OneToPatChance'] = True
+                for ract in riveraction:
+                    if player == ract[0] and ract[1] == 'stands pat':
+                        print '      ', 'SUCCESS:  %s %s' % ract[:2]
+                        self.handsplayers[player]['street2OneToPatDone'] = True
+
 
     def calcCheckCallRaise(self, hand):
         """Fill streetXCheckCallRaiseChance, streetXCheckCallRaiseDone
