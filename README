@@ -1,0 +1,1 @@
+Strange bug in turn_d1_riv_pat: certain files import with correct stats, others give absurd numbers, i.e. sometimes above 100%.
