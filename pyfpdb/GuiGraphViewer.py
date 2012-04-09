@@ -228,7 +228,7 @@ class GuiGraphViewer (threading.Thread):
             handles = handles[-1:]+handles[:-1]
             labels = labels[-1:]+labels[:-1]
 
-            legend = self.ax.legend(handles, labels, loc='upper left', fancybox=True, shadow=True, prop=FontProperties(size='smaller'))
+            legend = self.ax.legend(handles, labels, loc='best', fancybox=True, shadow=True, prop=FontProperties(size='smaller'))
             legend.draggable(True)
             
             self.graphBox.add(self.canvas)
