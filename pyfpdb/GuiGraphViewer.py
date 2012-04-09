@@ -212,7 +212,7 @@ class GuiGraphViewer (threading.Thread):
             self.canvas.show()
             self.canvas.draw()
         else:
-            self.ax.set_title((_("Profit graph for ring games")+names))
+            self.ax.set_title(_("Profit graph for ring games"))
 
             #Draw plot
             if graphops['showdown'] == 'ON':
