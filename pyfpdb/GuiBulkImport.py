@@ -279,7 +279,7 @@ class GuiBulkImport():
         for w in disabled_sites:                           # then disabled ones
             print w
             self.cbfilter.append_text(w)
-        self.cbfilter.set_active(0)
+        self.cbfilter.set_active(1) # FIXME temporary
         self.table.attach(self.cbfilter, 2, 3, 2, 3, xpadding=10, ypadding=1,
                           yoptions=gtk.SHRINK)
         self.cbfilter.show()
