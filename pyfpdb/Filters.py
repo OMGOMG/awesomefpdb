@@ -144,8 +144,8 @@ class Filters(threading.Thread):
         self.start_date.set_width_chars(12)
         self.end_date = gtk.Entry(max=12)
         self.end_date.set_width_chars(12)
-        self.start_date.set_property('editable', False)
-        self.end_date.set_property('editable', False)
+        self.start_date.set_property('editable', True)
+        self.end_date.set_property('editable', True)
 
         # For use in groups etc
         self.sbGroups = {}
