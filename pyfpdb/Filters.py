@@ -1458,6 +1458,15 @@ class Filters(threading.Thread):
         table.attach(self.end_date,   2,3, 1,2)
         table.attach(clr_end,         3,4, 1,2)
 
+        # set today as default start
+        # if the day is configured to not start at midnight, check whether it's still yesterday,
+        # and if so, select yesterday in the calendar instead of today
+        today = localtime()
+        if (today.tm_hour < self.day_start):
+            today = localtime(mktime(today) - 24*3600)
+        # there's got to be a better way to do this
+        self.start_date.set_text('%04d-%02d-%02d' % (today.tm_year, today.tm_mon, today.tm_mday, ))
+
     #end def fillDateFrame
 
     def get_limits_where_clause(self, limits):
