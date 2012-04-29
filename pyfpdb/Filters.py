@@ -299,6 +299,10 @@ class Filters(threading.Thread):
 
         self.mainVBox.show_all()
 
+        # hide rarely used frames
+        self.__toggle_box(vbox, 'Limits')
+        self.__toggle_box(vbox, 'Currencies')
+
         # Should do this cleaner
         if "Heroes" not in self.display or self.display["Heroes"] == False:
             playerFrame.hide()
